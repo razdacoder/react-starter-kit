@@ -23,7 +23,7 @@ export const registerSchema = z
       .string({ message: "Password is required" })
       .min(8, { message: "Password should be at least 8 characters" }),
   })
-  .refine((data) => data.password !== data.re_password, {
+  .refine((data) => data.password === data.re_password, {
     message: "Passwords does not match",
     path: ["re_password"],
   });

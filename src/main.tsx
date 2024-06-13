@@ -12,7 +12,18 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-      <Toaster richColors />
+      <Toaster
+        richColors
+        position="bottom-left"
+        toastOptions={{
+          classNames: {
+            error: "bg-red-400",
+            success: "text-green-400",
+            warning: "text-yellow-400",
+            info: "bg-blue-400",
+          },
+        }}
+      />
     </QueryClientProvider>
   </React.StrictMode>
 );

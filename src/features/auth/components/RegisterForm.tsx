@@ -1,3 +1,4 @@
+import SubmitButton from "@/components/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,16 +21,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import { z } from "zod";
+import useCreateUser from "../hooks/useCreateUser";
 
 export type RegisterFormValues = z.input<typeof registerSchema>;
 export default function RegisterForm() {
+  const { createUser, creatingUser } = useCreateUser();
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
   });
 
   function onSubmit(values: RegisterFormValues) {
-    console.log(values);
+    createUser(values, {
+      onSuccess: () => {
+        toast.info("Check you email to activate your account.");
+      },
+    });
   }
   return (
     <Card className="mx-auto max-w-sm">
@@ -118,9 +126,9 @@ export default function RegisterForm() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
+              <SubmitButton loading={creatingUser}>
                 Create an account
-              </Button>
+              </SubmitButton>
             </form>
           </Form>
           <div className="space-y-2 grid">
