@@ -19,6 +19,7 @@ import { changePasswordSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import useChangePassword from "../hooks/useChnagePassword";
 
 export type ChangePasswordValues = z.input<typeof changePasswordSchema>;
 type Props = {
@@ -28,9 +29,10 @@ export default function ChangePasswordForm({ user }: Props) {
   const form = useForm<ChangePasswordValues>({
     resolver: zodResolver(changePasswordSchema),
   });
+  const { updatePassword, updatingPassword } = useChangePassword();
 
   function onSubmit(values: ChangePasswordValues) {
-    console.log(values);
+    updatePassword(values);
   }
   return (
     <Card className=" max-w-sm">
@@ -88,7 +90,9 @@ export default function ChangePasswordForm({ user }: Props) {
                 />
               </div>
 
-              <SubmitButton loading={false}>Update Password</SubmitButton>
+              <SubmitButton loading={updatingPassword}>
+                Update Password
+              </SubmitButton>
             </form>
           </Form>
         </div>

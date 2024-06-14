@@ -1,3 +1,4 @@
+import { ChangePasswordValues } from "@/features/auth/components/ChangePasswordForm";
 import { LoginFormValues } from "@/features/auth/components/LoginForm";
 import { RegisterFormValues } from "@/features/auth/components/RegisterForm";
 import { UpdateUserValues } from "@/features/auth/components/UpdateAccountForm";
@@ -50,6 +51,14 @@ export const handleUpdateUserAccount = async (values: UpdateUserValues) => {
   const response = await api.patch("/auth/users/me/", values);
   if (response.status !== 200) {
     throw new Error("Failed to update user account");
+  }
+  return response.data;
+};
+
+export const handleChangePassword = async (values: ChangePasswordValues) => {
+  const response = await api.post("/auth/users/set_password/", values);
+  if (response.status !== 204) {
+    throw new Error("Failed to change password");
   }
   return response.data;
 };
