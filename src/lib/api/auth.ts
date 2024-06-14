@@ -28,3 +28,11 @@ export const handleAccountVerification = async (uid: string, token: string) => {
   }
   return response.data;
 };
+
+export const handleVerifyToken = async () => {
+  const response = await api.post("/auth/jwt/verify/");
+  if (response.status !== 200) {
+    throw new Error("Failed to verify token");
+  }
+  return response.data;
+};

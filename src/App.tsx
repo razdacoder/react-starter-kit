@@ -11,9 +11,11 @@ export default function App() {
   return (
     <Routes>
       {/* Protected Routes */}
+
       <Route path="/" element={<ProtectedRoutes />}>
         <Route index element={<Home />} />
       </Route>
+
       {/* Public Routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<Register />} />
