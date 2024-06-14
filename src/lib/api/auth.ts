@@ -36,3 +36,11 @@ export const handleVerifyToken = async () => {
   }
   return response.data;
 };
+
+export const getCurrentUser = async () => {
+  const response = await api.get("/auth/users/me/");
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch user");
+  }
+  return response.data as User;
+};
