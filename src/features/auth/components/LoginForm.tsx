@@ -1,3 +1,4 @@
+import SubmitButton from "@/components/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,15 +22,17 @@ import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { z } from "zod";
+import useLogin from "../hooks/useLogin";
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export default function LoginForm() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
+  const { login, loggingIn } = useLogin();
 
   function onSubmit(values: LoginFormValues) {
-    console.log(values);
+    login(values);
   }
   return (
     <Card className="mx-auto max-w-sm">
@@ -82,9 +85,7 @@ export default function LoginForm() {
               />
             </div>
 
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
+            <SubmitButton loading={loggingIn}>Login</SubmitButton>
           </form>
         </Form>
         <div className="grid gap-4">
