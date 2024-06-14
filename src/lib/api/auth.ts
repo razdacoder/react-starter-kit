@@ -1,5 +1,6 @@
 import { LoginFormValues } from "@/features/auth/components/LoginForm";
 import { RegisterFormValues } from "@/features/auth/components/RegisterForm";
+import { UpdateUserValues } from "@/features/auth/components/UpdateAccountForm";
 import api from ".";
 
 export const handleRegister = async (values: RegisterFormValues) => {
@@ -43,4 +44,12 @@ export const getCurrentUser = async () => {
     throw new Error("Failed to fetch user");
   }
   return response.data as User;
+};
+
+export const handleUpdateUserAccount = async (values: UpdateUserValues) => {
+  const response = await api.patch("/auth/users/me/", values);
+  if (response.status !== 200) {
+    throw new Error("Failed to update user account");
+  }
+  return response.data;
 };

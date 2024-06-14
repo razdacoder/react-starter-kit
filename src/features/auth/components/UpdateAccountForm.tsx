@@ -16,13 +16,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { changePasswordSchema, updateUserSchema } from "@/lib/schema";
+import { updateUserSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import useUpdateUser from "../hooks/useUpdateUser";
 
 export type UpdateUserValues = z.input<typeof updateUserSchema>;
-export type ChangePasswordValues = z.input<typeof changePasswordSchema>;
 type Props = {
   user: User;
 };
@@ -34,9 +34,10 @@ export default function UpdateAccountForm({ user }: Props) {
       last_name: user.last_name,
     },
   });
+  const { updateUser, updatingUser } = useUpdateUser();
 
   function onSubmit(values: UpdateUserValues) {
-    console.log(values);
+    updateUser(values);
   }
   return (
     <Card className=" max-w-sm">
@@ -87,7 +88,7 @@ export default function UpdateAccountForm({ user }: Props) {
                 />
               </div>
 
-              <SubmitButton loading={false}>Update Account</SubmitButton>
+              <SubmitButton loading={updatingUser}>Update Account</SubmitButton>
             </form>
           </Form>
         </div>
