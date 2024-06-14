@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 import Home from "./pages/Home";
 import AccountVerification from "./pages/auth/AccountVerification";
 import { LoginPage } from "./pages/auth/Login";
@@ -8,8 +9,13 @@ import { ResetPassword } from "./pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
+    element: <ProtectedRoutes />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
   },
   {
     path: "/login",

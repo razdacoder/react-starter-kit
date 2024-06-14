@@ -11,7 +11,10 @@ export const handleRegister = async (values: RegisterFormValues) => {
 };
 
 export const handleLogin = async (values: LoginFormValues) => {
-  const response = await api.post("/auth/jwt/create/", values);
+  const response = await api.post("/auth/jwt/create/", values, {
+    withCredentials: true,
+    withXSRFToken: true,
+  });
   if (response.status !== 200) {
     throw new Error("Could not login");
   }
