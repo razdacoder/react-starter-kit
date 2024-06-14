@@ -62,3 +62,11 @@ export const handleChangePassword = async (values: ChangePasswordValues) => {
   }
   return response.data;
 };
+
+export const handleLogout = async () => {
+  const response = await api.post("/auth/logout/");
+  if (response.status !== 204) {
+    throw new Error("Failed to logout");
+  }
+  return response.data;
+};
