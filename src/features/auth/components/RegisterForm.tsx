@@ -36,6 +36,7 @@ export default function RegisterForm() {
     createUser(values, {
       onSuccess: () => {
         toast.info("Check you email to activate your account.");
+        form.reset();
       },
     });
   }

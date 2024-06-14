@@ -1,15 +1,13 @@
-import { handleLogout } from "@/lib/api/auth";
+import { handleDeleteAccount } from "@/lib/api/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
-export default function useLogout() {
-  const { mutate: logout, isPending: loggingOut } = useMutation({
-    mutationFn: () => handleLogout(),
-    onSuccess: () => {
-      toast.success("Logout Successfully");
-      window.location.reload();
-    },
+export default function useDeleteAccount() {
+  const { mutate: deleteAccount, isPending: isDeleting } = useMutation({
+    mutationFn: (current_password: string) =>
+      handleDeleteAccount(current_password),
+
     onError: (error: AxiosError) => {
       const errorData = error?.response?.data as { [key: string]: string[] };
       Object.keys(errorData).forEach((key) => {
@@ -21,5 +19,5 @@ export default function useLogout() {
       });
     },
   });
-  return { logout, loggingOut };
+  return { deleteAccount, isDeleting };
 }

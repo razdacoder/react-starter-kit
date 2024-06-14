@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import ChangePasswordForm from "@/features/auth/components/ChangePasswordForm";
+import { DeletePasswordModal } from "@/features/auth/components/DeletePasswordModal";
 import UpdateAccountForm from "@/features/auth/components/UpdateAccountForm";
 import useCurrentUser from "@/features/auth/hooks/useCurrentUser";
 import useLogout from "@/features/auth/hooks/useLogout";
-import { Loader2, LogOut, Trash2 } from "lucide-react";
+import { Loader2, LogOut } from "lucide-react";
 
 export default function Home() {
   const { user, isLoading } = useCurrentUser();
@@ -24,9 +25,7 @@ export default function Home() {
         <ChangePasswordForm user={user!} />
       </div>
       <div className="flex justify-between items-center gap-x-8">
-        <Button variant="destructive" className="flex gap-x-2 items-center">
-          <Trash2 className="size-4" /> Delete Account
-        </Button>
+        <DeletePasswordModal />
         <Button
           onClick={() => logout()}
           variant="destructive"

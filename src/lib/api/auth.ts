@@ -70,3 +70,13 @@ export const handleLogout = async () => {
   }
   return response.data;
 };
+
+export const handleDeleteAccount = async (current_password: string) => {
+  const response = await api.delete("/auth/users/me/", {
+    data: { current_password },
+  });
+  if (response.status !== 204) {
+    throw new Error("Failed to delete user");
+  }
+  return response.data;
+};
