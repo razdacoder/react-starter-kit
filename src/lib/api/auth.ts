@@ -17,3 +17,11 @@ export const handleLogin = async (values: LoginFormValues) => {
   }
   return response.data as { access: string; refresh: string };
 };
+
+export const handleAccountVerification = async (uid: string, token: string) => {
+  const response = await api.post("/auth/users/activation/", { uid, token });
+  if (response.status !== 204) {
+    throw new Error("Failed to activate account");
+  }
+  return response.data;
+};

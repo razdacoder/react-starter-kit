@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import AccountVerification from "./pages/AccountVerification";
 import Home from "./pages/Home";
-import { LoginPage } from "./pages/Login";
-import Register from "./pages/Register";
-import { ResetPassword } from "./pages/ResetPassword";
+import AccountVerification from "./pages/auth/AccountVerification";
+import { LoginPage } from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ResendActivation from "./pages/auth/ResendActivation";
+import { ResetPassword } from "./pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "auth/activate/:uid/:token",
     element: <AccountVerification />,
+  },
+  {
+    path: "/resend-activation",
+    element: <ResendActivation />,
   },
 ]);
 
