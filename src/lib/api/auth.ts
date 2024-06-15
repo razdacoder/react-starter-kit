@@ -80,3 +80,37 @@ export const handleDeleteAccount = async (current_password: string) => {
   }
   return response.data;
 };
+
+export const handleGetAuthorizationUrl = async (
+  redirect_uri: string,
+  provider: string
+) => {
+  const response = await api.get(
+    `/auth/o/${provider}/?redirect_uri=${redirect_uri}`
+  );
+  if (response.status !== 200) {
+    throw new Error("Failed to get authorization URL");
+  }
+  return response.data as { authorization_url: string };
+};
+
+export const handleOAuthLogin = async (
+  provider: string,
+  state: string,
+  code: string
+) => {
+  const response = await api.post(
+    `/auth/o/${provider}/?state=${state}&code=${code}`,
+    undefined,
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+  if (response.status !== 201) {
+    throw new Error("Failed to login");
+  }
+
+  return response.data;
+};

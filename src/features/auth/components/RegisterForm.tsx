@@ -30,6 +30,13 @@ export default function RegisterForm() {
   const { createUser, creatingUser } = useCreateUser();
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      re_password: "",
+    },
   });
 
   function onSubmit(values: RegisterFormValues) {
