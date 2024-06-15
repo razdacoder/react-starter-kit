@@ -71,10 +71,8 @@ export const handleLogout = async () => {
   return response.data;
 };
 
-export const handleDeleteAccount = async (current_password: string) => {
-  const response = await api.delete("/auth/users/me/", {
-    data: { current_password },
-  });
+export const handleDeleteAccount = async () => {
+  const response = await api.delete("/auth/users/me/");
   if (response.status !== 204) {
     throw new Error("Failed to delete user");
   }

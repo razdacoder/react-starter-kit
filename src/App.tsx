@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Home from "./pages/Home";
 import AccountVerification from "./pages/auth/AccountVerification";
+import GithubOAuth from "./pages/auth/GithubOAuth";
+import GoogleOAuth from "./pages/auth/GoogleOAuth";
 import { LoginPage } from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ResendActivation from "./pages/auth/ResendActivation";
@@ -18,6 +20,8 @@ export default function App() {
 
       {/* Public Routes */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/auth/google" element={<GoogleOAuth />} />
+      <Route path="/auth/github" element={<GithubOAuth />} />
       <Route path="/register" element={<Register />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/resend-activation" element={<ResendActivation />} />

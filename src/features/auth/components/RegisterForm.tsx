@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 import useCreateUser from "../hooks/useCreateUser";
+import useGetAuthUrl from "../hooks/useGetAuthUrl";
 
 export type RegisterFormValues = z.input<typeof registerSchema>;
 export default function RegisterForm() {
@@ -38,6 +39,8 @@ export default function RegisterForm() {
       re_password: "",
     },
   });
+
+  const { getAuthUrl, gettingUrl } = useGetAuthUrl();
 
   function onSubmit(values: RegisterFormValues) {
     createUser(values, {
@@ -144,10 +147,30 @@ export default function RegisterForm() {
               OR Continue with
             </span>
             <div className="flex items-center gap-x-3">
-              <Button variant="outline" className="w-full">
+              <Button
+                disabled={gettingUrl}
+                onClick={() =>
+                  getAuthUrl({
+                    redirect_uri: "http://localhost:3000/auth/google",
+                    provider: "google-oauth2",
+                  })
+                }
+                variant="outline"
+                className="w-full flex gap-x-2 items-center"
+              >
                 <FaGoogle />
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button
+                disabled={gettingUrl}
+                onClick={() =>
+                  getAuthUrl({
+                    redirect_uri: "http://localhost:3000/auth/github",
+                    provider: "github",
+                  })
+                }
+                variant="outline"
+                className="w-full flex gap-x-2 items-center"
+              >
                 <FaGithub />
               </Button>
             </div>

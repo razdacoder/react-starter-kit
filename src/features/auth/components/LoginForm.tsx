@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { z } from "zod";
+import useGetAuthUrl from "../hooks/useGetAuthUrl";
 import useLogin from "../hooks/useLogin";
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
@@ -30,6 +31,7 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
   const { login, loggingIn } = useLogin();
+  const { getAuthUrl, gettingUrl } = useGetAuthUrl();
 
   function onSubmit(values: LoginFormValues) {
     login(values);
@@ -93,10 +95,30 @@ export default function LoginForm() {
             OR Continue with
           </span>
           <div className="flex items-center gap-x-3">
-            <Button variant="outline" className="w-full">
+            <Button
+              disabled={gettingUrl}
+              onClick={() =>
+                getAuthUrl({
+                  redirect_uri: "http://localhost:3000/auth/google",
+                  provider: "google-oauth2",
+                })
+              }
+              variant="outline"
+              className="w-full flex gap-x-2 items-center"
+            >
               <FaGoogle />
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button
+              disabled={gettingUrl}
+              onClick={() =>
+                getAuthUrl({
+                  redirect_uri: "http://localhost:3000/auth/github",
+                  provider: "github",
+                })
+              }
+              variant="outline"
+              className="w-full flex gap-x-2 items-center"
+            >
               <FaGithub />
             </Button>
           </div>
