@@ -8,6 +8,7 @@ import { LoginPage } from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ResendActivation from "./pages/auth/ResendActivation";
 import { ResetPassword } from "./pages/auth/ResetPassword";
+import ResetPasswordConfirm from "./pages/auth/ResetPasswordConfirm";
 
 export default function App() {
   return (
@@ -28,6 +29,10 @@ export default function App() {
       <Route
         path="/auth/activate/:uid/:token"
         element={<AccountVerification />}
+      />
+      <Route
+        path="/auth/password/reset/confirm/:uid/:token"
+        element={<ResetPasswordConfirm />}
       />
     </Routes>
   );

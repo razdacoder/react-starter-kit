@@ -1,6 +1,7 @@
 import { ChangePasswordValues } from "@/features/auth/components/ChangePasswordForm";
 import { LoginFormValues } from "@/features/auth/components/LoginForm";
 import { RegisterFormValues } from "@/features/auth/components/RegisterForm";
+import { ResetPasswordConfirmValues } from "@/features/auth/components/ResetPasswordConfirmForm";
 import { UpdateUserValues } from "@/features/auth/components/UpdateAccountForm";
 import api from ".";
 
@@ -115,5 +116,22 @@ export const handleOAuthLogin = async (
 
 export const handleResetPassword = async (email: string) => {
   const response = await api.post("/auth/users/reset_password/", { email });
+  return response.data;
+};
+
+export const handleResetPasswordConfirm = async (
+  values: ResetPasswordConfirmValues,
+  uid: string,
+  token: string
+) => {
+  const response = await api.post("/auth/users/reset_password_confirm/", {
+    ...values,
+    uid,
+    token,
+  });
+
+  if (response.status !== 204) {
+    throw new Error("Failed to reset password");
+  }
   return response.data;
 };
