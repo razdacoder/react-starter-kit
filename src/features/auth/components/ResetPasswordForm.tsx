@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import SubmitButton from "@/components/SubmitButton";
 import {
   Card,
   CardContent,
@@ -6,10 +6,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { resetPasswordSchema } from "@/lib/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { z } from "zod";
+import useResetPassword from "../hooks/useResetPassword";
+
+type ResetPasswordValues = z.input<typeof resetPasswordSchema>;
 export default function ResetPasswordForm() {
+  const form = useForm<ResetPasswordValues>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+  const { resetPassword, isResetting } = useResetPassword();
+
+  function onSubmit(values: ResetPasswordValues) {
+    resetPassword(values.email);
+  }
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
@@ -19,21 +43,28 @@ export default function ResetPasswordForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
+        <Form {...form}>
+          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="me@example.com"
+                      type="email"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </div>
+            <SubmitButton loading={isResetting}>Reset Password</SubmitButton>
+          </form>
+        </Form>
 
-          <Button type="submit" className="w-full">
-            Reset Password
-          </Button>
-        </div>
         <div className="mt-4 text-center text-sm">
           Remember Password?{" "}
           <Link to="/login" className="underline">

@@ -112,3 +112,8 @@ export const handleOAuthLogin = async (
 
   return response.data;
 };
+
+export const handleResetPassword = async (email: string) => {
+  const response = await api.post("/auth/users/reset_password/", { email });
+  return response.data;
+};
